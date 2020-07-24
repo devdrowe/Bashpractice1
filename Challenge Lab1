@@ -1,0 +1,31 @@
+#!/bin/bash
+# Author: Deleyse Rowe
+# Date: Friday, July 24, 2020
+# This script creates 25 new files using your name
+
+printf 'Welcome, this script creates 25 files of your name and file number in a directory with your name.%s\n\n'
+
+printf 'Please enter your name: '
+read -r name
+
+mkdir -p ./$name/
+
+lastFileNum=$(($(ls ./$name/$name* 2> /dev/null | wc -l)+1))
+
+if [ $lastFileNum -lt 10 ]; then
+        lastFileNum=0$lastFileNum
+else
+        lastFileNum=$lastFileNum
+fi
+
+for x in {1..25}; do
+        newFileNum=$(($(ls ./$name/$name* 2> /dev/null | wc -l)+1))
+        if [ $newFileNum -lt 10 ]; then
+                newFileNum=0$newFileNum
+        else
+                newFileNum=$newFileNum
+        fi
+        touch ./$name/$name$newFileNum
+done
+
+printf '%s\nYour files named "'$name$lastFileNum'" up to "'$name$newFileNum'" were created.\n'
